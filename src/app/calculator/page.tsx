@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Calculator, TrendingUp, PiggyBank, ArrowRight, Info } from 'lucide-react';
@@ -26,6 +26,14 @@ const calculatorSchemes = [
 ];
 
 export default function CalculatorPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading calculator...</p></div>}>
+      <CalculatorContent />
+    </Suspense>
+  );
+}
+
+function CalculatorContent() {
   const searchParams = useSearchParams();
   const schemeParam = searchParams.get('scheme');
 

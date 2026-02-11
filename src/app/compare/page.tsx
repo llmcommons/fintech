@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -17,6 +17,14 @@ import { Button, Badge, Card } from '@/components/ui';
 import { formatCurrencyFull, getRiskLabel } from '@/lib/utils';
 
 export default function ComparePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading comparison...</p></div>}>
+      <CompareContent />
+    </Suspense>
+  );
+}
+
+function CompareContent() {
   const searchParams = useSearchParams();
   const initialSchemes = searchParams.get('schemes')?.split(',') || [];
 
